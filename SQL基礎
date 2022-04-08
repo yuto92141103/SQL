@@ -1,0 +1,132 @@
+//テーブル
+行（縦）：カラム
+列（横）：レコード
+
+//テーブル例（kimetsu）
+name.   　kokyu.    feature
+伊之助　　獣のの呼吸　　猪突猛進
+煉獄　　　炎の呼吸　　　眉毛二股
+富岡　　　水の呼吸　　　天然
+禰󠄀豆子　　　　　　　　　竹
+鱗滝　　　水の呼吸　　　師匠
+
+SELECT name , feature //カラム名
+　FROM kimetsu//テーブル名
+ →nameとfeatureを全て取得
+ 
+
+SELECT name AS '名前', feature AS '特徴'
+ FROM kimetsu
+ →カラム名を変更（AS）
+ 
+ SELECT *
+  FROM kimetsu 
+  →全カラム指定
+  
+ SELECT DISTINCT（kokyu)
+  FROM kimetsu
+  →重複なしで取得
+  
+  //テーブル例（eva）
+  name.   kawaii.   role
+  綾波　　　10      　　パイロット
+  アスカ　　3          パイロット
+  ユイ　　　6      
+  ミサト　　4          作戦部長
+  
+  ※WHERE
+  
+  SELECT name , kawaii
+   FROM eva
+  WHERE kawaii > 5
+  →kawaiiが５より大きいレコードを取得　WHERE（条件指定）
+  
+  SELECT *
+   FROM eva
+   WHERE kawaii >5 AND role = 'パイロット'
+   →kawaii５より大きいかつ、roleがパイロットのレコードを取得　AND（両方満たす）
+   
+   SELECT *
+    FROM eva
+    WHERE kawaii > 5 OR role = 'パイロット'
+    →kawaiiが５より大きい、もしくはroleがパイロットのレコードを取得　OR（どちらか満たす）
+    
+    
+   SELECT *
+    FROM eva
+    WHERE kawaii BETWEEN 4 AND 6;
+    →kawaiiが4〜６の間でレコード取得　BETWEEN（指定の中）
+    
+    SELECT *
+     FROM eva
+     WHERE kawaii IN ('パイロット','作戦部長');
+     →role内のパイロットかと作戦部長を含むレコード取得　IN（含む）、NOT IN （まとめて否定）
+     
+   SELECT *
+    FROM eva
+   WHERE name LIKE 'ア%';
+   →アから始まるレコード取得　LIKE（あいまい検索）
+   
+   SELECT *
+    FROM eva
+    WHERE role IS NULL;
+    →値が不明なレコードを指定　IS　NULL、IS NOT NULL（空じゃない）
+    
+    
+    
+    
+    ※LIMIT
+    SELECT *
+     FROM eva
+     LIMIT 2;
+     →LIMIT（行数上限指定）上から２行まで取得
+     
+   ※ORDER BY
+   SELECT*
+    FROM eva
+    ORDER BY kawaii;
+    →kawaiiを昇順に並び替え
+    
+    ※ORDER BY 〜　DESC
+    SELECT *
+     FROM eva
+     ORDER BY kawaii DESC;
+     →降順
+     
+                         予約後（WHERE SELECT etc）は大文字
+                         特定の予約後の後は改行
+                         SELECTで列名指定、LIMITすると早くなる
+                         
+
+
+
+//GROUP BY
+
+テーブル例(members)
+name.     created_day. channel.   age
+エレン　　　　2021-2-13    web.      27
+光一　　　　　2021-2-13    ad.       27
+さゆり　　　　2021-2-15    ad.       27
+雄介　　　　　2021-2-15.   ad.       33
+あかり　　　　2021-2-16    web.      24
+
+SELECT COUNT(name)
+ FROM members
+ WHERE created_day = "2021-2-13";
+　→日毎のレコード数を取得　上記の場合”2”
+ 
+ レコード数を数えたい時に　COUNTを使用
+ 
+SELECT COUNT(name)
+ FROM members
+ GROUP BY created_day;
+ →同じ値でまとめる　
+ 上記の場合
+ 
+ created_day.    count
+ 2021-2-13.       2
+ 2021-2-15.       2
+ 2021-2-16.       1
+ が取得する
+ 
+ 
